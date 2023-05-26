@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface ParentDao extends JpaRepository<Parent, Integer> {
 
     @Query("SELECT NEW com.daofab.installment.entity.Parent(p.id, p.sender, p.receiver, p.totalAmount, SUM(c.paidAmount) as totalPaidAmount)" +
-            " FROM Parent as p JOIN Child as c ON p.id = c.parentId" +
+            " FROM Parent as p LEFT JOIN Child as c ON p.id = c.parentId" +
             " GROUP by p.id")
     Page<Parent> findAllByPageable(Pageable pageable);
 
