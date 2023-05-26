@@ -77,7 +77,7 @@ public class ParentControllerTest {
 
     @Test
     public void getParentPageData() throws Exception {
-        String response = getResponse(mockGetPage(mockMvc, "/parent/", 0, 2));
+        String response = getResponse(mockGet(mockMvc, "/parent/0/2"));
         ControllerResponse controllerResponse = stringToObj(response, ControllerResponse.class);
         assertTrue("Check for valid response failed", controllerResponse.getData() != null && controllerResponse.isSuccess());
         List<ParentData> pageDataList = (List<ParentData>) controllerResponse.getData();
@@ -117,21 +117,6 @@ public class ParentControllerTest {
         MvcResult mvcResult;
         if (url != null) {
             mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(url)
-                    .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-            mvcResult.getRequest().getAsyncContext().setTimeout(100000);
-            mvcResult = mockMvc.perform(asyncDispatch(mvcResult)).andReturn();
-
-            return mvcResult;
-        }
-        return null;
-    }
-
-    private static MvcResult mockGetPage(MockMvc mockMvc, String url, Integer page, Integer size) throws Exception {
-        MvcResult mvcResult;
-        if (url != null) {
-            mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(url)
-                    .param("page", page.toString())
-                    .param("size", size.toString())
                     .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
             mvcResult.getRequest().getAsyncContext().setTimeout(100000);
             mvcResult = mockMvc.perform(asyncDispatch(mvcResult)).andReturn();

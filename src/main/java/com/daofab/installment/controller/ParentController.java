@@ -16,9 +16,9 @@ public class ParentController {
     @Autowired
     TranscationService transcationService;
 
-    @GetMapping
-    public Callable<ControllerResponse> getPaginatedParent(@RequestParam(value = "page") Integer page,
-                                                           @RequestParam(value = "size") Integer size) {
+    @GetMapping(value = "/{page}/{size}")
+    public Callable<ControllerResponse> getPaginatedParent(@PathVariable(value = "page") Integer page,
+                                                           @PathVariable(value = "size") Integer size) {
         return ()-> transcationService.getParentData(page, size);
     }
 
